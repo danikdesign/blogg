@@ -1,15 +1,19 @@
 <h2>Post details:</h2>
 <br />
-<h4>
+<p>
   <%= @row['content'] %>
   <br />
-  <br />
-</h4>
+</p>
   <p><small>Added at <%= @row['created_date'] %></small></p>
 <br />
 <br />
 <h4>Comments:</h4>
 <br />
+<% @comments.each do |comment| %>
+  <p><%= comment['content'] %></p>
+  <p><small>Added at <%= comment['created_date'] %></small></p>
+  <hr />
+<% end %>
 <form action="/details/<%= @row['id'] %>" method="POST">
   <div class="form-floating">
     <textarea name="post" class="form-control" placeholder="Your comment..." id="floatingTextarea"></textarea>
