@@ -1,7 +1,7 @@
 #encoding: utf-8
 require 'sqlite3'
 require 'rubygems'
-require 'sinatra'v
+require 'sinatra'
 
 def init_db
   @db = SQLite3::Database.new 'blogg.db'
@@ -13,6 +13,13 @@ before do
 end
 
 configure do
+  init_db
+  @db.execute 'CREATE TABLE IF NOT EXISTS Posts
+  (
+    id	INTEGER PRIMARY KEY AUTOINCREMENT,
+    created_date DATE,
+    content	TEXT
+   )'
 end
 
 get '/' do
@@ -24,7 +31,7 @@ get '/new' do
 end
 
 post '/new' do
-  @message = params[:message]
+  @post = params[:post]
 
-  erb "You typed #{@message}"
+  erb "You typed #{@post}"
 end
