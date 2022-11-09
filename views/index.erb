@@ -2,12 +2,15 @@
 <br>
 <% @results.each do |post| %>
   <p>
+    <small>Author: <%= post['author'] %></small>
+    <br />
+    <br />
     <%= post['content']%>
-    <br>
-    <br>
+    <br />
+    <br />
     Added at <%= post['created_date'] %>
-    <br>
-    <br>
+    <br />
+    <br />
     <a href="/details/<%= post['id']%>">Comments</a>
   </p>
   <hr />

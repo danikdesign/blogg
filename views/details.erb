@@ -1,6 +1,8 @@
 <h2>Post details:</h2>
 <br />
 <p>
+  <small>Author: <%= @row['author'] %></small>
+  <br />
   <%= @row['content'] %>
   <br />
 </p>
@@ -10,11 +12,16 @@
 <h4>Comments:</h4>
 <br />
 <% @comments.each do |comment| %>
+  <p><small>Author: <%= comment['author'] %></small></p>
   <p><%= comment['content'] %></p>
   <p><small>Added at <%= comment['created_date'] %></small></p>
   <hr />
 <% end %>
 <form action="/details/<%= @row['id'] %>" method="POST">
+  <div class="form-floating">
+    <textarea name="author" class="form-control" placeholder="Your name" id="floatingTextarea" style="height: 35px"></textarea>
+  </div>
+  <br />
   <div class="form-floating">
     <textarea name="post" class="form-control" placeholder="Your comment..." id="floatingTextarea"></textarea>
   </div>

@@ -56,7 +56,7 @@ post '/new' do
     return erb :new
 
   else
-    @db.execute 'insert into Posts (content, created_date) values (?, datetime())', [content]
+    @db.execute 'insert into Posts (content, created_date, author) values (?, datetime(), ?)', [content, author]
 
     redirect to '/'
   end
@@ -76,8 +76,9 @@ end
 post '/details/:post_id' do
   post_id = params[:post_id]
   content = params[:post]
+  author = params[:author]
 
-  @db.execute 'insert into Comments (content, created_date, post_id) values (?, datetime(), ?)', [content, post_id]
+  @db.execute 'insert into Comments (content, created_date, author, post_id) values (?, datetime(), ?, ?)', [content, author, post_id]
 
   redirect to('/details/' + post_id)
 

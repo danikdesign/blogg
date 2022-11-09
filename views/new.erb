@@ -1,6 +1,10 @@
 <h2>Add new post</h2>
 <form action="/new" method="POST">
   <div class="form-floating">
+    <textarea name="author" class="form-control" placeholder="Enter your name" id="floatingTextarea" style="height: 35px"></textarea>
+    <label for="floatingTextarea">Your name</label>
+  </div>
+  <div class="form-floating">
     <textarea name="post" class="form-control" placeholder="Leave a post here" id="floatingTextarea" style="height: 200px"></textarea>
     <label for="floatingTextarea">Your post</label>
   </div>
