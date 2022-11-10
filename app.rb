@@ -43,10 +43,10 @@ get '/new' do
 end
 
 post '/new' do
-  author = params[:author]
-  content = params[:post]
+  @author = params[:author]
+  @content = params[:post]
 
-  hh = { :author => 'Type author name!', :content => 'Type your post' }
+  hh = { :author => 'Type your name', :post => ' Type your post' }
 
   err = hh.select { |key,_| params[key] == '' }.values.join(',')
 
@@ -56,7 +56,7 @@ post '/new' do
     return erb :new
 
   else
-    @db.execute 'insert into Posts (content, created_date, author) values (?, datetime(), ?)', [content, author]
+    @db.execute 'insert into Posts (content, created_date, author) values (?, datetime(), ?)', [@content, @author]
 
     redirect to '/'
   end
@@ -75,11 +75,26 @@ end
 
 post '/details/:post_id' do
   post_id = params[:post_id]
-  content = params[:post]
-  author = params[:author]
+  @comment_content = params[:post]
+  @comment_author = params[:author]
 
-  @db.execute 'insert into Comments (content, created_date, author, post_id) values (?, datetime(), ?, ?)', [content, author, post_id]
 
-  redirect to('/details/' + post_id)
+  hh = { :post => 'Type your comment', :author => ' Type your name'}
+  err = hh.select { |key,_| params[key] == ''}.values.join(',')
+
+  if err != ''
+    @err = err
+    post_id = params[:post_id]
+    results = @db.execute 'select * from Posts where id = ?', [post_id]
+    @row = results[0]
+    @comments = @db.execute 'select * from Comments where post_id = ? order by id', [post_id]
+
+    erb :details
+
+  else
+    @db.execute 'insert into Comments (content, created_date, author, post_id) values (?, datetime(), ?, ?)', [@comment_content, @comment_author, post_id]
+
+    redirect to('/details/' + post_id)
+  end
 
 end

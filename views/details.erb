@@ -1,29 +1,32 @@
 <h2>Post details:</h2>
-<br />
-<p>
-  <small>Author: <%= @row['author'] %></small>
   <br />
-  <%= @row['content'] %>
-  <br />
-</p>
-  <p><small>Added at <%= @row['created_date'] %></small></p>
-<br />
-<br />
+    <p><small>Author: <%= @row['author'] %></small></p>
+    <p><%= @row['content'] %></p>
+    <p><small>Added at <%= @row['created_date'] %></small></p>
+    <br />
+    <br />
+    <br />
+
+
 <h4>Comments:</h4>
-<br />
-<% @comments.each do |comment| %>
-  <p><small>Author: <%= comment['author'] %></small></p>
-  <p><%= comment['content'] %></p>
-  <p><small>Added at <%= comment['created_date'] %></small></p>
-  <hr />
+  <br />
+    <% @comments.each do |comment| %>
+      <p><small>Author: <%= comment['author'] %></small></p>
+      <p><%= comment['content'] %></p>
+      <p><small>Added at <%= comment['created_date'] %></small></p>
+      <hr />
+    <% end %>
+
+<%if @err && @err.length > 0 then %>
+  <div class="alert alert-danger"><%=@err%></div>
 <% end %>
 <form action="/details/<%= @row['id'] %>" method="POST">
   <div class="form-floating">
-    <textarea name="author" class="form-control" placeholder="Your name" id="floatingTextarea" style="height: 35px"></textarea>
+    <textarea name="author" class="form-control" placeholder="Your name" id="floatingTextarea" style="height: 35px"><%= @comment_author %></textarea>
   </div>
   <br />
   <div class="form-floating">
-    <textarea name="post" class="form-control" placeholder="Your comment..." id="floatingTextarea"></textarea>
+    <textarea name="post" class="form-control" placeholder="Your comment..." id="floatingTextarea"><%= @comment_content %></textarea>
   </div>
   <br />
   <button type="submit" class="btn btn-primary">Add comment</button>
